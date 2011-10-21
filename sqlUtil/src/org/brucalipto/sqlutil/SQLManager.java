@@ -91,7 +91,7 @@ public abstract class SQLManager
      * @param parameters List of {@link SQLParameter} to use to complete the prepared statement
      * @return The number of rows inserted, -1 if an error occurs
      */
-    public int sqlInsert(final String preparedStatement, final SQLParameter[] parameters)
+    public int insert(final String preparedStatement, final SQLParameter[] parameters)
     {
         return executeSimpleQuery(preparedStatement, parameters);
     }
@@ -102,7 +102,7 @@ public abstract class SQLManager
      * @param parameters The {@link PrepStmtInputBean} to use to complete the prepared statement
      * @return The number of rows inserted, -1 if an error occurs
      */
-    public int sqlInsert(final String preparedStatement, final PrepStmtInputBean parameters)
+    public int insert(final String preparedStatement, final PrepStmtInputBean parameters)
     {
         if (parameters!=null)
         {
@@ -117,7 +117,7 @@ public abstract class SQLManager
      * @param parameters List of {@link SQLParameter} to use to complete the prepared statement
      * @return The number of rows updated, -1 if an error occurs
      */
-    public int sqlUpdate(final String preparedStatement, final SQLParameter[] parameters)
+    public int update(final String preparedStatement, final SQLParameter[] parameters)
     {
         return executeSimpleQuery(preparedStatement, parameters);
     }
@@ -128,7 +128,7 @@ public abstract class SQLManager
      * @param parameters The {@link PrepStmtInputBean} to use to complete the prepared statement
      * @return The number of rows updated, -1 if an error occurs
      */
-    public int sqlUpdate(final String preparedStatement, final PrepStmtInputBean parameters)
+    public int update(final String preparedStatement, final PrepStmtInputBean parameters)
     {
         if (parameters!=null)
         {
@@ -143,7 +143,7 @@ public abstract class SQLManager
      * @param parameters List of {@link SQLParameter} to use to complete the prepared statement
      * @return The number of rows deleted, -1 if an error occurs
      */
-    public int sqlDelete(final String preparedStatement, final SQLParameter[] parameters)
+    public int delete(final String preparedStatement, final SQLParameter[] parameters)
     {
         return executeSimpleQuery(preparedStatement, parameters);
     }
@@ -154,7 +154,7 @@ public abstract class SQLManager
      * @param parameters The {@link PrepStmtInputBean} to use to complete the prepared statement
      * @return The number of rows deleted, -1 if an error occurs
      */
-    public int sqlDelete(final String preparedStatement, final PrepStmtInputBean parameters)
+    public int delete(final String preparedStatement, final PrepStmtInputBean parameters)
     {
         if (parameters!=null)
         {
@@ -169,7 +169,7 @@ public abstract class SQLManager
      * @param parameters List of {@link SQLParameter} to use to complete the prepared statement
      * @return Returns a List of DynaBeans containing returned rows
      */
-    public List sqlDynaSelect(final String preparedStatement, final SQLParameter[] params)
+    public List dynaSelect(final String preparedStatement, final SQLParameter[] params)
     {
     	SQLParameter[] parameters;
         if (params==null)
@@ -277,7 +277,7 @@ public abstract class SQLManager
      * @param outputSQLType A java.sql.Types type of return value
      * @return The {@link SPParameter} containing the returned value
      */
-    public SQLParameter sqlSimpleSelect(final String preparedStatement, SQLParameter[] params, final int outputSQLType)
+    public SQLParameter simpleSelect(final String preparedStatement, SQLParameter[] params, final int outputSQLType)
     {
         final SQLParameter[] parameters;
         if (params==null)
@@ -354,11 +354,10 @@ public abstract class SQLManager
             }
 
             rs = pstmt.executeQuery();
+            log.debug("Prepared statement '"+preparedStatement+"' succesfully executed!");
             while (rs.next())
             {
-                SQLParameter result = new SQLParameter(outputSQLType, (Serializable)rs.getObject(1));
-                log.debug("Prepared statement '"+preparedStatement+"' succesfully executed!");
-                return result;
+                return new SQLParameter(outputSQLType, (Serializable)rs.getObject(1));
             }
             log.info("Prepared statement '"+preparedStatement+"' returned '0' rows");
         }
@@ -378,7 +377,7 @@ public abstract class SQLManager
         return new SQLParameter(outputSQLType, null);
     }
 
-    private int executeSimpleQuery(final String preparedStatement, final SQLParameter[] params)
+    protected int executeSimpleQuery(final String preparedStatement, final SQLParameter[] params)
     {
     	final SQLParameter[] parameters;
         if (params==null)
@@ -505,7 +504,7 @@ public abstract class SQLManager
         try{if (dbConn!=null)dbConn.close();}catch(Exception e){log.error("Error closing connection", e);}
     }
     
-    private static DataSource setupDataSource(final String dsJNDIName)
+    protected static DataSource setupDataSource(final String dsJNDIName)
     {
         Context env = null;
 		final String contextURI = dsJNDIName.startsWith(REF_PREFIX)?dsJNDIName:REF_PREFIX+dsJNDIName;
