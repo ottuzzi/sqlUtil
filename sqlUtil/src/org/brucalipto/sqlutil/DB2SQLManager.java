@@ -46,17 +46,6 @@ public class DB2SQLManager extends SQLManager
 		throw new IllegalStateException("Do not call this contructor!");
 	}
 	
-	public static DB2SQLManager getInstance(DataSource dataSource)
-	{
-		DB2SQLManager instance = (DB2SQLManager)instances.get(""+dataSource.hashCode());
-		if (instance == null)
-		{
-			instance = new DB2SQLManager(dataSource);
-			instances.put(""+dataSource.hashCode(), instance);
-		}
-		return instance;
-	}
-	
 	public static DB2SQLManager getInstance(String dataSourceName)
 	{
 		DB2SQLManager instance = (DB2SQLManager)instances.get(dataSourceName);
