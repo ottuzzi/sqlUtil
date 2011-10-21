@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="sqlUtil" basedir="." default="sqlutil">
+	
+	<property name="src.dir" value="./src"/>
+    <property name="lib.dir" value="./lib"/>
+    <property name="dist.dir" value="./dist"/>
+	<property name="work.dir" value="./work"/>
+	    
+    <!-- no more configuration below this point -->
+	<tstamp>
+    	<format
+	    	property="BUILD_DATETIME"
+	    	pattern="dd-MMMM-yyyy HH:mm"
+	    	locale="en,US"/>
+	</tstamp>    
+    
+    <property name="dist.dependency.dir" value="${dist.dir}/dependencies"/>
+    <property name="classes.dir" value="${work.dir}/classes"/>
+	<property name="current-version" value="${DSTAMP}.${TSTAMP}"/>
+
+    <path id="project.class.path">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+	</path>
+
+    <target name="clean" description="clean up">
+        <echo>Project: ${ant.project.name}</echo>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${work.dir}"/>
+	</target>
+
+    <target depends="clean" name="sqlutil">
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${dist.dependency.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${classes.dir}/standard"/>
+        <javac
+			srcdir="${src.dir}"
+			destdir="${classes.dir}">
+			<classpath>
+			    <path refid="project.class.path"/>
+			</classpath>
+        </javac>
+    	<jar
+            compress="true"
+            destfile="${dist.dir}/sqlutil.jar"
+            index="yes" >
+            <fileset dir="${classes.dir}"/>
+			<manifest>
+				<attribute name="Bundle-Name" value="brucalipto.sqlutil"/>
+				<attribute name="Bundle-SymbolicName" value="${ant.project.name}"/>
+				<attribute name="Bundle-Version" value="${current-version}"/>
+				<attribute name="Export-Package" value="org.brucalipto.sqlutil"/>
+				<attribute name="Build-Date" value="${BUILD_DATETIME}"/>
+			</manifest> 
+        </jar>
+        <copy todir="${dist.dependency.dir}">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </copy>
+        <delete dir="${work.dir}"/>
+    </target>
+
+</project>
