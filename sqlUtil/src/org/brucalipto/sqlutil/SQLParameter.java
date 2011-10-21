@@ -26,10 +26,7 @@ import java.util.Date;
  */
 public class SQLParameter implements Serializable, Cloneable
 {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 2752389841215169269L;
+    private static final long serialVersionUID = 2752389841215169269L;
 	public final int sqlType;
     public final Serializable value;
 
