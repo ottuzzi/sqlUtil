@@ -55,6 +55,13 @@ public class SPParameter
      */
     public String toString()
     {
-        return "'Types."+SQLUtilTypes.SQL_TYPES.get(Integer.valueOf(""+this.sqlType))+"'->'"+this.value+"'";
+    	if (this.name.length()>0)
+    	{
+    		return "'"+this.name+"': 'Types."+SQLUtilTypes.SQL_TYPES.get(Integer.valueOf(""+this.sqlType))+"'->'"+this.value+"'";
+    	}
+    	else
+    	{
+    		return "'Types."+SQLUtilTypes.SQL_TYPES.get(Integer.valueOf(""+this.sqlType))+"'->'"+this.value+"'";
+    	}
     }
 }

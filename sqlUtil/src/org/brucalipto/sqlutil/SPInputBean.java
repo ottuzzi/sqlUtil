@@ -45,6 +45,126 @@ public class SPInputBean
     /**
      * Method to add an input parameter
      * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value A String value
+     */
+    public void addInputParameter(final int pos, final String name, final String value)
+    {
+        final SPParameter spParam = new SPParameter(Types.VARCHAR, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value An Integer value
+     */
+    public void addInputParameter(final int pos, final String name, final Integer value)
+    {
+        final SPParameter spParam = new SPParameter(Types.INTEGER, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value A Long value
+     */
+    public void addInputParameter(final int pos, final String name, final Long value)
+    {
+        final SPParameter spParam = new SPParameter(Types.INTEGER, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value A Date value
+     */
+    public void addInputParameter(final int pos, final String name, final Date value)
+    {
+        final SPParameter spParam = new SPParameter(Types.DATE, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value A Boolean value
+     */
+    public void addInputParameter(final int pos, final String name, final Boolean value)
+    {
+        final SPParameter spParam = new SPParameter(Types.BOOLEAN, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value A Character value
+     */
+    public void addInputParameter(final int pos, final String name, final Character value)
+    {
+        final SPParameter spParam = new SPParameter(Types.CHAR, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value A Double value
+     */
+    public void addInputParameter(final int pos, final String name, final Double value)
+    {
+        final SPParameter spParam = new SPParameter(Types.DOUBLE, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value A Float value
+     */
+    public void addInputParameter(final int pos, final String name, final Float value)
+    {
+        final SPParameter spParam = new SPParameter(Types.FLOAT, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value A Timestamp value
+     */
+    public void addInputParameter(final int pos, final String name, final Timestamp value)
+    {
+        final SPParameter spParam = new SPParameter(Types.TIMESTAMP, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
+     * @param name The name of the field
+     * @param value An Object value
+     */
+    public void addInputParameter(final int pos, final String name, final Object value)
+    {
+        final SPParameter spParam = new SPParameter(Types.OTHER, name, value);
+        this.inputParams[pos] = spParam;
+    }
+
+    /**
+     * Method to add an input parameter
+     * @param pos The position in which you want to insert the value
      * @param value A String value
      */
     public void addInputParameter(final int pos, final String value)
@@ -152,6 +272,22 @@ public class SPInputBean
         this.inputParams[pos] = spParam;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Method to add an output parameter
      * @param pos The position in which you define output value

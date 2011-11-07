@@ -121,7 +121,7 @@ public class DB2SQLManager extends SQLManager
                 final SPParameter inputParam = inputParameters[i];
                 final int sqlType = inputParam.sqlType;
                 final Object inputParamValue = inputParam.value;
-                log.debug((i+1)+") Setting input value 'Types."+SQLUtilTypes.SQL_TYPES.get(Integer.valueOf(""+sqlType))+"'-'"+inputParamValue+"'");
+                log.debug((i+1)+") Setting input value: "+inputParam);
                 if (inputParamValue==null)
                 {
                     call.setNull(i+1, sqlType);
