@@ -27,6 +27,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -193,7 +194,16 @@ public class DB2SQLManager extends SQLManager
             }
             if (hasResultSet)
             {
-            	RowSetDynaClass rowSetDynaClass = new RowSetDynaClass(call.getResultSet());
+            	RowSetDynaClass rowSetDynaClass = new RowSetDynaClass(call.getResultSet(), false);
+            	if (log.isDebugEnabled())
+            	{
+            		log.debug("Going to return a RowSetDynaClass with following properties:");
+            		DynaProperty[] properties = rowSetDynaClass.getDynaProperties();
+            		for (int i=0; i<properties.length; i++)
+            		{
+            			log.debug("Name: '"+properties[i].getName()+"'; Type: '"+properties[i].getType().getName()+"'");
+            		}
+            	}
             	SPParameter outParam = new SPParameter(Types.JAVA_OBJECT, rowSetDynaClass);
             	output.addResult(outParam);
             }

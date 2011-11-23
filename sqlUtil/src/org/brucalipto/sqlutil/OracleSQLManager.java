@@ -27,6 +27,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -179,8 +180,17 @@ public class OracleSQLManager extends SQLManager
                 if (sqlType==SQLUtilTypes.CURSOR)
                 {
                     resultSet = (ResultSet)spResult;
-                    RowSetDynaClass rowSetDynaClass = new RowSetDynaClass(resultSet);
-                    outParam = new SPParameter(sqlType, rowSetDynaClass);
+                    RowSetDynaClass rowSetDynaClass = new RowSetDynaClass(resultSet, false);
+                	if (log.isDebugEnabled())
+                	{
+                		log.debug("Going to return a RowSetDynaClass with following properties:");
+                		DynaProperty[] properties = rowSetDynaClass.getDynaProperties();
+                		for (int j=0; j<properties.length; j++)
+                		{
+                			log.debug("Name: '"+properties[j].getName()+"'; Type: '"+properties[j].getType().getName()+"'");
+                		}
+                	}
+                	outParam = new SPParameter(sqlType, rowSetDynaClass);
                 }
                 else
                 {
