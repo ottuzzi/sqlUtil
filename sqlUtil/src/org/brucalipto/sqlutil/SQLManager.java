@@ -24,14 +24,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -167,9 +166,10 @@ public abstract class SQLManager
      * Method useful for SQL SELECT
      * @param preparedStatement The prepared statement to execute
      * @param parameters List of {@link SQLParameter} to use to complete the prepared statement
-     * @return Returns a List of DynaBeans containing returned rows
+     * @return Returns a RowSetDynaClass containing returned rows
+     * @throws SQLException 
      */
-    public List dynaSelect(final String preparedStatement, final SQLParameter[] params)
+    public RowSetDynaClass dynaSelect(final String preparedStatement, final SQLParameter[] params) throws SQLException
     {
     	SQLParameter[] parameters;
         if (params==null)
@@ -247,27 +247,27 @@ public abstract class SQLManager
             }
 
             rs = pstmt.executeQuery();
-            RowSetDynaClass rowSetDynaClass = new RowSetDynaClass(rs);
-            
+            RowSetDynaClass rowSetDynaClass = new RowSetDynaClass(rs, false);
             if (log.isDebugEnabled())
             {
-                log.debug("Prepared statement '"+preparedStatement+"' returned '"+rowSetDynaClass.getRows().size()+"' rows");
+                log.debug("Prepared statement '"+preparedStatement+"' returned '"+rowSetDynaClass.getRows().size()+"' rows with following properties:");
+        		DynaProperty[] properties = rowSetDynaClass.getDynaProperties();
+        		for (int i=0; i<properties.length; i++)
+        		{
+        			log.debug("Name: '"+properties[i].getName()+"'; Type: '"+properties[i].getType().getName()+"'");
+        		}
             }
-            return rowSetDynaClass.getRows();
+            return rowSetDynaClass;
         }
         catch(SQLException e)
         {
             log.error("Error executing prepared statement '"+preparedStatement+"'", e);
-        }
-        catch(Exception e)
-        {
-            log.error("Error executing prepared statement '"+preparedStatement+"'", e);
+            throw e;
         }
         finally
         {
             closeResources(rs, pstmt, dbConn);
         }
-        return new ArrayList(0);
     }
 
     /**
