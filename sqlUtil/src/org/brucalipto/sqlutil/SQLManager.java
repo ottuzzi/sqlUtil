@@ -171,6 +171,7 @@ public abstract class SQLManager
      */
     public RowSetDynaClass dynaSelect(final String preparedStatement, final SQLParameter[] params) throws SQLException
     {
+    	final long elapsedTime = System.currentTimeMillis();
     	SQLParameter[] parameters;
         if (params==null)
         {
@@ -250,7 +251,7 @@ public abstract class SQLManager
             RowSetDynaClass rowSetDynaClass = new RowSetDynaClass(rs, false);
             if (log.isDebugEnabled())
             {
-                log.debug("Prepared statement '"+preparedStatement+"' returned '"+rowSetDynaClass.getRows().size()+"' rows with following properties:");
+                log.debug("Prepared statement '"+preparedStatement+"' returned '"+rowSetDynaClass.getRows().size()+"' rows in '"+(System.currentTimeMillis()-elapsedTime)+"' millis with following properties:");
         		DynaProperty[] properties = rowSetDynaClass.getDynaProperties();
         		for (int i=0; i<properties.length; i++)
         		{
